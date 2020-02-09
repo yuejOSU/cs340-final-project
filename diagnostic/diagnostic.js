@@ -33,6 +33,30 @@ app.get('/',function(req,res,next){
   });
 });
 
+app.get('/customer',function(req,res,next){
+  var context = {};
+    mysql.pool.query('SELECT * FROM diagnostic', function(err, rows, fields){
+	  context.results = JSON.stringify(rows);
+	  res.render('customer',context);
+	  });
+});
+
+app.get('/booking',function(req,res,next){
+  var context = {};
+    mysql.pool.query('SELECT * FROM diagnostic', function(err, rows, fields){
+	  context.results = JSON.stringify(rows);
+	  res.render('booking',context);
+	  });
+});
+
+app.get('/room',function(req,res,next){
+  var context = {};
+    mysql.pool.query('SELECT * FROM diagnostic', function(err, rows, fields){
+	  context.results = JSON.stringify(rows);
+	  res.render('room',context);
+	  });
+});
+
 app.use(function(req,res){
   res.status(404);
   res.render('404');
