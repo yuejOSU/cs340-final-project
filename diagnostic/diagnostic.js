@@ -49,11 +49,19 @@ app.get('/booking',function(req,res,next){
 	  });
 });
 
-app.get('/room',function(req,res,next){
+app.get('/search-existing-rooms',function(req,res,next){
   var context = {};
     mysql.pool.query('SELECT * FROM diagnostic', function(err, rows, fields){
 	  context.results = JSON.stringify(rows);
-	  res.render('room',context);
+	  res.render('search-existing-rooms',context);
+	  });
+});
+
+app.get('/add-new-rooms',function(req,res,next){
+  var context = {};
+    mysql.pool.query('SELECT * FROM diagnostic', function(err, rows, fields){
+	  context.results = JSON.stringify(rows);
+	  res.render('add-new-rooms',context);
 	  });
 });
 
