@@ -1,10 +1,33 @@
-<h1>CS340 Final Project: Jason Yue and Andy Trinh</h1>
-
-<h2>Welcome to HotelServer <br> Navigate using the buttons below </h2>
-<br>
-
-<button><a href="/create-customer-account"> Create An Account </a></button>
-<button><a href="/search-customer"> Search Existing Customers </a></button>
-<button><a href="/create-booking"> Add Bookings </a></button>
-<button><a href="/add-new-rooms"> Add new room </a></button>
-<button><a href="/search-existing-rooms"> Search existing rooms </a></button>
+<h1>What is this database?</h1>
+<h2>Definitions</h2>
+<p>
+    This database includes 4 primary entities:
+    <ul>
+        <li>Customers</li>
+        <li>Bookings</li>
+        <li>Booking_Details</li>
+        <li>Rooms</li>        
+    </ul>
+</p>
+<h2>Description of entities:</h2>
+<h3>Customers</h3>
+<p>
+    Customers are people which seek to book rooms to stay at the hotel. One customer may book many rooms.
+</p>
+<h3>Bookings</h3>
+    Bookings consolidate information about when a customer made the booking and the price total of the booking.
+<p>
+    
+</p>
+<h3>Booking_Details</h3>
+    Booking_Details connects the many customers to many rooms so that the staff can see which rooms the
+    customers have booked and which customers are staying in which rooms.
+<p>
+    
+</p>
+<h3>Rooms</h3>
+<p>
+    Rooms are the rooms that customers may book at the hotel. Rooms consolidate information about what the
+    room number is, whether it is clean for use, and whether it is currently being occupied by a customer.
+    A room can hold many customers.
+</p>
