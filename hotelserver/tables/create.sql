@@ -32,4 +32,5 @@ CREATE TABLE `Rooms` (
 `room_price` int NOT NULL,
 `is_clean` boolean NOT NULL,
 `is_occupied` boolean NOT NULL,
+PRIMARY KEY (`room_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
