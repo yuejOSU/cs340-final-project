@@ -10,10 +10,12 @@ app.set('port', process.argv[2]);
 
 app.get('/',function(req,res,next){
   var context = {};
-  var createString = "CREATE TABLE diagnostic(" +
-  "id INT PRIMARY KEY AUTO_INCREMENT," +
-  "text VARCHAR(255) NOT NULL)";
-  mysql.pool.query('DROP TABLE IF EXISTS diagnostic', function(err){
+  var createString = "CREATE TABLE IF NOT EXISTS `customer`(" +
+  "`customer_id` INT PRIMARY KEY AUTO_INCREMENT," +
+  "`first_name` VARCHAR(255) NOT NULL," +
+  "`last_name` VARCHAR(255) NOT NULL," +
+  "`email` VARCHAR(255) NOT NULL)";
+  mysql.pool.query('DROP TABLE IF EXISTS `customer`', function(err){
     if(err){
       next(err);
       return;
@@ -23,8 +25,8 @@ app.get('/',function(req,res,next){
         next(err);
 		return;
       }
-	  mysql.pool.query('INSERT INTO diagnostic (`text`) VALUES ("MySQL is Working!")',function(err){
-	    mysql.pool.query('SELECT * FROM diagnostic', function(err, rows, fields){
+	  mysql.pool.query('INSERT INTO `customer` (`first_name`, `last_name`, `email`) VALUES ("Bob", "Ross", "boobroos@gmail.com")',function(err){
+	    mysql.pool.query('SELECT * FROM `customer`', function(err, rows, fields){
 		  context.results = JSON.stringify(rows);
 		  res.render('home',context);
 		});
@@ -35,7 +37,7 @@ app.get('/',function(req,res,next){
 
 app.get('/create-customer-account',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM diagnostic', function(err, rows, fields){
+    mysql.pool.query('SELECT * FROM `customer`', function(err, rows, fields){
 	  context.results = JSON.stringify(rows);
 	  res.render('create-customer-account',context);
 	  });
@@ -43,7 +45,7 @@ app.get('/create-customer-account',function(req,res,next){
 
 app.get('/search-customer',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM diagnostic', function(err, rows, fields){
+    mysql.pool.query('SELECT * FROM `customer`', function(err, rows, fields){
 	  context.results = JSON.stringify(rows);
 	  res.render('search-customer',context);
 	  });
@@ -51,7 +53,7 @@ app.get('/search-customer',function(req,res,next){
 
 app.get('/create-booking',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM diagnostic', function(err, rows, fields){
+    mysql.pool.query('SELECT * FROM `customer`', function(err, rows, fields){
 	  context.results = JSON.stringify(rows);
 	  res.render('create-booking',context);
 	  });
@@ -59,7 +61,7 @@ app.get('/create-booking',function(req,res,next){
 
 app.get('/search-existing-rooms',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM diagnostic', function(err, rows, fields){
+    mysql.pool.query('SELECT * FROM `customer`', function(err, rows, fields){
 	  context.results = JSON.stringify(rows);
 	  res.render('search-existing-rooms',context);
 	  });
@@ -67,7 +69,7 @@ app.get('/search-existing-rooms',function(req,res,next){
 
 app.get('/add-new-rooms',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM diagnostic', function(err, rows, fields){
+    mysql.pool.query('SELECT * FROM `customer`', function(err, rows, fields){
 	  context.results = JSON.stringify(rows);
 	  res.render('add-new-rooms',context);
 	  });
