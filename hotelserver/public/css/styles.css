@@ -6,11 +6,7 @@ h1 {
   text-transform: uppercase;
 }
 
-label {
-  font-family: "Trebuchet MS", sans-serif;
-}
-
-a {
+label, a, p, h2, h3 {
   font-family: "Trebuchet MS", sans-serif;
 }
 
