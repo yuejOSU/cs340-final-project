@@ -1,26 +1,25 @@
-<h1>Create an account</h1>
+<body style="background-color:#FFFAED; text-align:center">
+  <h1>Create an account</h1>
+  <div class="create-container">
+    <form action="/create-customer-account" method="post">
+      <div>
+        <div class="inputs">
+          <div class="input1">
+            <label>First name</label>
+            <input name="first_name" type="text" required="required" placeholder="First Name">
+          </div>
+          <div class="input2">
+            <label>Last name</label>
+            <input name="last_name" type="text" required="required" placeholder="Last Name">
+          </div>
 
-<div class="create-container">
-  <form action="/create-customer-account" method="post">
-    <div>
-      <div class="inputs">
-        <div class="input1">
-          <label>First name</label>
-          <input name="first_name" type="text" required="required" placeholder="First Name">
+          <div class="input3">
+            <label>E-mail</label>
+            <input name="email" type="text" required="required" placeholder="E-mail">
+          </div>
         </div>
-        <div class="input2">
-          <label>Last name</label>
-          <input name="last_name" type="text" required="required" placeholder="Last Name">
-        </div>
+        <input type="submit" value="Submit">
       </div>
-        <div class="input3">
-          <label>E-mail</label>
-          <input name="email" type="text" required="required" placeholder="E-mail">
-        </div>
-
-      <button type="submit">Register</button>
-    </div>
-  </form>
-</div>
-
+    </form>
+  </div>
 {{results}}
