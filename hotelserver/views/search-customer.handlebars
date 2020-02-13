@@ -1,10 +1,13 @@
-<h1>Search Existing Customers</h1>
-
-<div class="search-container">
-  <form action="/search-customer" method="post">
-    <div class="search">
-      <input name="Look up existing customer" type="text" placeholder="Full Name">
+<body style="background-color:#FFFAED; text-align:center">
+  <h1>Search Existing Customers</h1>
+    <div class="search-container">
+      <form action="/search-customer" method="post">
+        <div class="inputs">
+          <label>Name</label>
+          <input name="Look up existing customer" type="text" placeholder="Full Name">
+        </div>
+      </form>
+      <input type="submit" value="Search">
     </div>
-  </form>
-  <button type="submit">Search</button>
-</div>
+
+{{results}}
