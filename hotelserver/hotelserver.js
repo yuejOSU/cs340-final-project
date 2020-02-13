@@ -8,36 +8,93 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', process.argv[2]);
 
+var x = 0;
+
+
 app.get('/',function(req,res,next){
   var context = {};
-  var createString = "CREATE TABLE IF NOT EXISTS `customer`(" +
-  "`customer_id` INT PRIMARY KEY AUTO_INCREMENT," +
+
+  var createTables = [
+  "CREATE TABLE IF NOT EXISTS `customers`(" +
+  "`customer_id` INT(11) PRIMARY KEY AUTO_INCREMENT," +
   "`first_name` VARCHAR(255) NOT NULL," +
   "`last_name` VARCHAR(255) NOT NULL," +
-  "`email` VARCHAR(255) NOT NULL)";
-  mysql.pool.query('DROP TABLE IF EXISTS `customer`', function(err){
-    if(err){
-      next(err);
-      return;
-    }
-    mysql.pool.query(createString, function(err){
-      if(err){
-        next(err);
-		return;
-      }
-	  mysql.pool.query('INSERT INTO `customer` (`first_name`, `last_name`, `email`) VALUES ("Bob", "Ross", "boobroos@gmail.com")',function(err){
-	    mysql.pool.query('SELECT * FROM `customer`', function(err, rows, fields){
-		  context.results = JSON.stringify(rows);
-		  res.render('home',context);
-		});
-	  });
-    });
-  });
+  "`email` VARCHAR(255) NOT NULL);",
+
+  "CREATE TABLE IF NOT EXISTS `bookings`(" +
+  "`booking_id` INT(11) PRIMARY KEY AUTO_INCREMENT," +
+  "`cid` INT(11)," +
+  "`booking_date` varchar(255) NOT NULL," +
+  "FOREIGN KEY (cid) REFERENCES customers(customer_id));",
+
+  "CREATE TABLE IF NOT EXISTS `rooms`(" +
+  "`room_id` INT(11) AUTO_INCREMENT," +
+  "`is_clean` boolean NOT NULL," +
+  "`is_occupied` boolean NOT NULL," +
+  "PRIMARY KEY (`room_id`));",
+
+  "CREATE TABLE IF NOT EXISTS `booking_details`(" +
+  "`booking_details_id` INT(11) PRIMARY KEY AUTO_INCREMENT," +
+  "`bid` INT(11)," +
+  "`rid` INT(11)," +
+  "`booking_price` INT NOT NULL," +
+  "FOREIGN KEY (bid) REFERENCES customers(customer_id)," +
+  "FOREIGN KEY (rid) REFERENCES rooms(room_id));"
+  ];
+
+  var deleteTables = [
+  "DROP TABLE IF EXISTS `customers`",
+  "DROP TABLE IF EXISTS `bookings`",
+  "DROP TABLE IF EXISTS `rooms`",
+  "DROP TABLE IF EXISTS `booking_details`"
+  ];
+
+  var insert = [
+  "INSERT INTO `customers` (`email`, `first_name`, `last_name`) VALUES (\"Bob\", \"Ross\", \"boobroos@gmail.com\")",
+  "INSERT INTO `bookings` (`booking_date`) VALUES (\"09/20/1920\")",
+  "INSERT INTO `rooms` (`is_clean`, `is_occupied`) VALUES (false, true)",
+  "INSERT INTO `booking_details` (`booking_price`) VALUES (1)"
+  ];
+
+
+  if(!x) {
+    for (i = 0; i < 4; i++) {
+    //  mysql.pool.query(deleteTables[i], function(err){
+    //    if(err){
+    //      next(err);
+    //      return;
+    //    }
+    //  });
+      mysql.pool.query(createTables[i], function(err){
+        if(err){
+          next(err);
+          return;
+        }
+      });
+      mysql.pool.query(insert[i], function(err){
+        if(err){
+          next(err);
+          return;
+        }
+      });
+    };
+  }
+  x = 1;
+
+
+  res.render('home');
+
+  //mysql.pool.query(insert,function(err){
+  //  mysql.pool.query('SELECT * FROM `bookings`', function(err, rows, fields){
+	//  context.results = JSON.stringify(rows);
+	// res.render('home',context);
+	//  });
+//  });
 });
 
 app.get('/create-customer-account',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM `customer`', function(err, rows, fields){
+    mysql.pool.query('SELECT * FROM `customers`', function(err, rows, fields){
 	  context.results = JSON.stringify(rows);
 	  res.render('create-customer-account',context);
 	  });
@@ -45,7 +102,7 @@ app.get('/create-customer-account',function(req,res,next){
 
 app.get('/search-customer',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM `customer`', function(err, rows, fields){
+    mysql.pool.query('SELECT * FROM `customers`', function(err, rows, fields){
 	  context.results = JSON.stringify(rows);
 	  res.render('search-customer',context);
 	  });
@@ -53,7 +110,7 @@ app.get('/search-customer',function(req,res,next){
 
 app.get('/create-booking',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM `customer`', function(err, rows, fields){
+    mysql.pool.query('SELECT * FROM `bookings`', function(err, rows, fields){
 	  context.results = JSON.stringify(rows);
 	  res.render('create-booking',context);
 	  });
@@ -61,7 +118,7 @@ app.get('/create-booking',function(req,res,next){
 
 app.get('/search-existing-rooms',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM `customer`', function(err, rows, fields){
+    mysql.pool.query('SELECT * FROM `rooms`', function(err, rows, fields){
 	  context.results = JSON.stringify(rows);
 	  res.render('search-existing-rooms',context);
 	  });
@@ -69,7 +126,7 @@ app.get('/search-existing-rooms',function(req,res,next){
 
 app.get('/add-new-rooms',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM `customer`', function(err, rows, fields){
+    mysql.pool.query('SELECT * FROM `rooms`', function(err, rows, fields){
 	  context.results = JSON.stringify(rows);
 	  res.render('add-new-rooms',context);
 	  });
