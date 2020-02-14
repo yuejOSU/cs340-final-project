@@ -3,11 +3,26 @@
     <div class="search-container">
       <form action="/search-booking-details" method="post">
         <div class="inputs">
-          <label>Name</label>
+          <label>Booking ID</label>
           <input name="Look up existing booking details" type="text" placeholder="Booking ID">
         </div>
       </form>
       <input type="submit" value="Search">
     </div>
-
-{{results}}
+    <div>
+      <table>
+          <thead>
+              <th>Booking ID</th>
+              <th>Booking Price</th>
+              <th>Customer ID</th>
+              <th>Room ID</th>
+          </thead>
+          {{#each results}}
+            <tr>
+              <td>{{booking_details_id}}</td>
+              <td>{{booking_price}}</td>
+              <td>{{bid}}</td>
+              <td>{{rid}}</td>
+            </tr>
+          {{/each}}
+    </div>

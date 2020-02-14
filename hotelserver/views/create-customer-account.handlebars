@@ -4,22 +4,41 @@
     <form action="/create-customer-account" method="post">
       <div>
         <div class="inputs">
-          <div class="input1">
+          <div class="first_name">
             <label>First name</label>
             <input name="first_name" type="text" required="required" placeholder="First Name">
           </div>
-          <div class="input2">
+          <div class="last_name">
             <label>Last name</label>
             <input name="last_name" type="text" required="required" placeholder="Last Name">
           </div>
-
-          <div class="input3">
+          <div class="email">
             <label>E-mail</label>
             <input name="email" type="text" required="required" placeholder="E-mail">
+          </div>
+          <div class="age">
+            <label>Age</label>
+            <input name="age" type="number" required="required" placeholder="Age">
           </div>
         </div>
         <input type="submit" value="Submit">
       </div>
     </form>
   </div>
-{{results}}
+  <div>
+      <table>
+          <thead>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Age</th>
+          </thead>
+          {{#each results}}
+            <tr>
+              <td>{{first_name}}</td>
+              <td>{{last_name}}</td>
+              <td>{{email}}</td>
+              <td>{{age}}</td>
+            </tr>
+          {{/each}}
+    </div>

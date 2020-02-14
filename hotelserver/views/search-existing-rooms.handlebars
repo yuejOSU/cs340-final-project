@@ -16,4 +16,18 @@
         </form>
     </div>
 
-{{results}}
+    <div>
+        <table>
+            <thead>
+                <th>Room Number</th>
+                <th>Clean</th>
+                <th>Vacant</th>
+            </thead>
+            {{#each results}}
+              <tr>
+                <td>{{room_id}}</td>
+                <td>{{is_clean}}</td>
+                <td>{{is_occupied}}</td>
+              </tr>
+            {{/each}}
+      </div>

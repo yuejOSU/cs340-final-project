@@ -32,6 +32,20 @@ input[type=submit]:hover
   border: 1px solid #3079ED;
 }
 
+th, td {
+  border: 1px solid black;
+
+}
+
+table {
+  position: relative;
+  top: 25px;
+  border-collapse: collapse;
+  display: inline-table;
+  margin: 0 auto;
+  height: 50px;
+  width: 50%;
+}
 
 body {
   margin: 0;
