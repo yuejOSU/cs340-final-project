@@ -114,13 +114,10 @@ app.get('/create-customer-account',function(req,res,next){
 app.post('/create-customer-account', function(req, res, next){
   var context = {};
   var params  = req.body;
-  console.log("request body: ", params);
-  var sql = "INSERT INTO customers(first_name, last_name, email, age) VALUES (?, ?, ?, ?);";
     mysql.pool.query('INSERT INTO customers SET ?', params, function(err, results, fields){
     mysql.pool.query('SELECT * FROM `customers`', function(err, rows, fields){
-      //context.results = JSON.stringify(rows);
       context.results = rows;
-	  res.render('create-customer-account',context);
+	    res.render('create-customer-account',context);
 	  });
   });
 });
@@ -129,7 +126,6 @@ app.post('/create-customer-account', function(req, res, next){
 app.get('/search-customer',function(req,res,next){
   var context = {};
     mysql.pool.query('SELECT first_name, last_name, email, age FROM `customers`', function(err, rows, fields){
-	  //context.results = JSON.stringify(rows);
     context.results = rows;
 	  res.render('search-customer',context);
 	  });
@@ -144,6 +140,17 @@ app.get('/create-booking',function(req,res,next){
 	  });
 });
 
+app.post('/create-booking', function(req, res, next){
+  var context = {};
+  var params  = req.body;
+    mysql.pool.query('INSERT INTO bookings SET ?', params, function(err, results, fields){
+    mysql.pool.query('SELECT * FROM `bookings`', function(err, rows, fields){
+      context.results = rows;
+	    res.render('create-booking',context);
+	  });
+  });
+});
+
 app.get('/search-booking-details',function(req,res,next){
   var context = {};
   mysql.pool.query('SELECT * FROM `booking_details`', function(err, rows, fields){
@@ -156,7 +163,6 @@ app.get('/search-booking-details',function(req,res,next){
 app.get('/search-existing-rooms',function(req,res,next){
   var context = {};
     mysql.pool.query('SELECT * FROM `rooms`', function(err, rows, fields){
-      //context.results = JSON.stringify(rows);
       context.results = rows;
 	  res.render('search-existing-rooms',context);
 	  });
