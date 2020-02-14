@@ -3,11 +3,29 @@
     <div class="search-container">
       <form action="/search-customer" method="post">
         <div class="inputs">
-          <label>Name</label>
-          <input name="Look up existing customer" type="text" placeholder="Full Name">
+          <label>First Name</label>
+          <input name="first_name" type="text" placeholder="First Name">
+          <label>Last Name</label>
+          <input name="last_name" type="text" placeholder="Last Name">
         </div>
       </form>
       <input type="submit" value="Search">
     </div>
 
-{{results}}
+    <div>
+        <table>
+            <thead>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Age</th>
+            </thead>
+            {{#each results}}
+              <tr>
+                <td>{{first_name}}</td>
+                <td>{{last_name}}</td>
+                <td>{{email}}</td>
+                <td>{{age}}</td>
+              </tr>
+            {{/each}}
+      </div>

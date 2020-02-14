@@ -1,9 +1,17 @@
 var express = require('express');
 var mysql = require('./dbcon.js');
-
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var path = require("path");
+
+var bodyParser = require('body-parser')
+var app = express()
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -11,7 +19,6 @@ app.set('port', process.argv[2]);
 app.use(express.static(path.join(__dirname, '/public')));
 
 var x = 0;
-
 
 app.get('/',function(req,res,next){
   var context = {};
@@ -21,7 +28,8 @@ app.get('/',function(req,res,next){
   "`customer_id` INT(11) PRIMARY KEY AUTO_INCREMENT," +
   "`first_name` VARCHAR(255) NOT NULL," +
   "`last_name` VARCHAR(255) NOT NULL," +
-  "`email` VARCHAR(255) NOT NULL);",
+  "`email` VARCHAR(255) NOT NULL," +
+  "`age` INT(11) NOT NULL);",
 
   "CREATE TABLE IF NOT EXISTS `bookings`(" +
   "`booking_id` INT(11) PRIMARY KEY AUTO_INCREMENT," +
@@ -52,7 +60,7 @@ app.get('/',function(req,res,next){
   ];
 
   var insert = [
-  "INSERT INTO `customers` (`email`, `first_name`, `last_name`) VALUES (\"Bob\", \"Ross\", \"boobroos@gmail.com\")",
+  "INSERT INTO `customers` (`email`, `first_name`, `last_name`, `age`) VALUES (\"boobroos@gmail.com\", \"Bob\", \"Ross\", 27)",
   "INSERT INTO `bookings` (`booking_date`) VALUES (\"09/20/1920\")",
   "INSERT INTO `rooms` (`is_clean`, `is_occupied`) VALUES (false, true)",
   "INSERT INTO `booking_details` (`booking_price`) VALUES (1)"
@@ -97,15 +105,32 @@ app.get('/',function(req,res,next){
 app.get('/create-customer-account',function(req,res,next){
   var context = {};
     mysql.pool.query('SELECT * FROM `customers`', function(err, rows, fields){
-	  context.results = JSON.stringify(rows);
+      //context.results = JSON.stringify(rows);
+      context.results = rows;
 	  res.render('create-customer-account',context);
 	  });
 });
 
+app.post('/create-customer-account', function(req, res, next){
+  var context = {};
+  var params  = req.body;
+  console.log("request body: ", params);
+  var sql = "INSERT INTO customers(first_name, last_name, email, age) VALUES (?, ?, ?, ?);";
+    mysql.pool.query('INSERT INTO customers SET ?', params, function(err, results, fields){
+    mysql.pool.query('SELECT * FROM `customers`', function(err, rows, fields){
+      //context.results = JSON.stringify(rows);
+      context.results = rows;
+	  res.render('create-customer-account',context);
+	  });
+  });
+});
+
+
 app.get('/search-customer',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM `customers`', function(err, rows, fields){
-	  context.results = JSON.stringify(rows);
+    mysql.pool.query('SELECT first_name, last_name, email, age FROM `customers`', function(err, rows, fields){
+	  //context.results = JSON.stringify(rows);
+    context.results = rows;
 	  res.render('search-customer',context);
 	  });
 });
@@ -113,7 +138,8 @@ app.get('/search-customer',function(req,res,next){
 app.get('/create-booking',function(req,res,next){
   var context = {};
     mysql.pool.query('SELECT * FROM `bookings`', function(err, rows, fields){
-	  context.results = JSON.stringify(rows);
+      //context.results = JSON.stringify(rows);
+      context.results = rows;
 	  res.render('create-booking',context);
 	  });
 });
@@ -121,7 +147,8 @@ app.get('/create-booking',function(req,res,next){
 app.get('/search-existing-rooms',function(req,res,next){
   var context = {};
     mysql.pool.query('SELECT * FROM `rooms`', function(err, rows, fields){
-	  context.results = JSON.stringify(rows);
+      //context.results = JSON.stringify(rows);
+      context.results = rows;
 	  res.render('search-existing-rooms',context);
 	  });
 });
@@ -129,7 +156,8 @@ app.get('/search-existing-rooms',function(req,res,next){
 app.get('/add-new-rooms',function(req,res,next){
   var context = {};
     mysql.pool.query('SELECT * FROM `rooms`', function(err, rows, fields){
-	  context.results = JSON.stringify(rows);
+      //context.results = JSON.stringify(rows);
+      context.results = rows;
 	  res.render('add-new-rooms',context);
 	  });
 });

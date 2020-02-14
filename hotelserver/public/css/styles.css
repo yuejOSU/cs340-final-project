@@ -31,3 +31,22 @@ input[type=submit]:hover
   background-image: linear-gradient(top,#4D90FE,#357AE8);
   border: 1px solid #3079ED;
 }
+
+html, body {
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid black;
+
+}
+
+table {
+  position: relative;
+  top: 25px;
+  border-collapse: collapse;
+  display: inline-table;
+  margin: 0 auto;
+  height: 50px;
+  width: 50%;
+}

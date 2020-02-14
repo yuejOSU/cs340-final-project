@@ -18,4 +18,16 @@
     </form>
   </div>
 
-{{results}}
+  <div>
+      <table>
+          <thead>
+              <th>Booking ID</th>
+              <th>Booking Date</th>
+          </thead>
+          {{#each results}}
+            <tr>
+              <td>{{booking_id}}</td>
+              <td>{{booking_date}}</td>
+            </tr>
+          {{/each}}
+    </div>
