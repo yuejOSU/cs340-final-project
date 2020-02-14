@@ -3,26 +3,102 @@
     <head>
         <title>CS340 - Final Project</title>
         <link rel="stylesheet" href="/css/styles.css">
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="jquery-3.4.0.min.js"></script>
     </head>
     <body style="background-color:#FFFAED; text-align:center">
-    <body>
-        <header class="header-fixed">
-            <div class="header-limiter">
-                <nav>
-                    <a href="/">Home</a>
-                    <a href="/create-customer-account">Create An Account</a>
-                    <a href="search-customer">Search Existing Customers</a>
-                    <a href="/create-booking">Add Bookings</a>
-                    <a href="/add-new-rooms">Add New Room</a>
-                    <a href="/search-existing-rooms">Search Existing Rooms</a>
-                </nav>
+        <body>      
+            <div class="navbar">
+                <a href="/">Home</a>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="myFunction1()">Account
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="customerDropdown">
+                        <a href="/create-customer-account">Create An Account</a>
+                        <a href="search-customer">Search Existing Customers</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="myFunction2()">Bookings
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="bookingDropdown">
+                        <a href="/create-booking">Add Bookings</a>
+                        <a href="/search-booking-details">Booking Details</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="myFunction3()">Rooms
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="roomDropdown">
+                        <a href="/add-new-rooms">Add New Room</a>
+                        <a href="/search-existing-rooms">Search Existing Rooms</a>
+                    </div>
+                </div>
             </div>
-        </header>
 
-        {{{ body }}}
+            <script>
+                /* When the user clicks on the button, 
+                toggle between hiding and showing the dropdown content */
+                function myFunction1() {
+                    document.getElementById("customerDropdown").classList.toggle("show");
 
+                    var bookingDropdown = document.getElementById("bookingDropdown");
+                    var roomDropdown = document.getElementById("roomDropdown");
+                    if (bookingDropdown.classList.contains('show')) {
+                        bookingDropdown.classList.remove('show');
+                    }
+                    if (roomDropdown.classList.contains('show')) {
+                        roomDropdown.classList.remove('show');
+                    }
+                }
+                function myFunction2() {
+                    document.getElementById("bookingDropdown").classList.toggle("show");
 
+                    var customerDropdown = document.getElementById("customerDropdown");
+                    var roomDropdown = document.getElementById("roomDropdown");
+                    if (customerDropdown.classList.contains('show')) {
+                        customerDropdown.classList.remove('show');
+                    }
+                    if (roomDropdown.classList.contains('show')) {
+                        roomDropdown.classList.remove('show');
+                    }
+                }
+                function myFunction3() {
+                    document.getElementById("roomDropdown").classList.toggle("show");
 
+                    var customerDropdown = document.getElementById("customerDropdown");
+                    var bookingDropdown = document.getElementById("bookingDropdown");
+                    if (customerDropdown.classList.contains('show')) {
+                        customerDropdown.classList.remove('show');
+                    }
+                    if (bookingDropdown.classList.contains('show')) {
+                        bookingDropdown.classList.remove('show');
+                    }
+                }
+
+                // Close the dropdown if the user clicks outside of it
+                window.onclick = function(e) {
+                    if (!e.target.matches('.dropbtn')) {
+                        var customerDropdown = document.getElementById("customerDropdown");
+                        var bookingDropdown = document.getElementById("bookingDropdown");
+                        var roomDropdown = document.getElementById("roomDropdown");
+                        
+                        if (customerDropdown.classList.contains('show')) {
+                            customerDropdown.classList.remove('show');
+                        }
+                        if (bookingDropdown.classList.contains('show')) {
+                            bookingDropdown.classList.remove('show');
+                        }
+                        if (roomDropdown.classList.contains('show')) {
+                            roomDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            </script>
+
+            {{{ body }}}
+        </body>
     </body>
 </html>

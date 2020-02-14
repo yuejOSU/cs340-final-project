@@ -118,6 +118,14 @@ app.get('/create-booking',function(req,res,next){
 	  });
 });
 
+app.get('/search-booking-details',function(req,res,next){
+  var context = {};
+  mysql.pool.query('SELECT * FROM `booking_details`', function(err, rows, fields){
+    context.results = JSON.stringify(rows);
+    res.render('search-booking-details',context);
+  });
+});
+
 app.get('/search-existing-rooms',function(req,res,next){
   var context = {};
     mysql.pool.query('SELECT * FROM `rooms`', function(err, rows, fields){
