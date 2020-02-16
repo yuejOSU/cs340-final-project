@@ -19,6 +19,8 @@
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Age</th>
+                <th></th>
+                <th></th>
             </thead>
             {{#each results}}
               <tr>
@@ -26,6 +28,8 @@
                 <td>{{last_name}}</td>
                 <td>{{email}}</td>
                 <td>{{age}}</td>
+                <td><form action="/edit" method="post"><input type="submit" value="Edit" onclick="editRow({{this.id}})"></form></td>
+				        <td><input type="submit" value="Delete" onclick="deleteRow({{this.id}})"></td>
               </tr>
             {{/each}}
       </div>

@@ -19,11 +19,15 @@
           <thead>
               <th>Booking ID</th>
               <th>Booking Date</th>
+              <th></th>
+              <th></th>
           </thead>
           {{#each results}}
             <tr>
               <td>{{booking_id}}</td>
               <td>{{booking_date}}</td>
+              <td><form action="/edit" method="post"><input type="submit" value="Edit" onclick="editRow({{this.id}})"></form></td>
+				      <td><input type="submit" value="Delete" onclick="deleteRow({{this.id}})"></td>
             </tr>
           {{/each}}
     </div>

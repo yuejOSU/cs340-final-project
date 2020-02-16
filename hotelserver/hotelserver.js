@@ -92,6 +92,7 @@ app.get('/',function(req,res,next){
   x = 1;
 
   res.render('home');
+});
 
 app.get('/create-customer-account',function(req,res,next){
   var context = {};

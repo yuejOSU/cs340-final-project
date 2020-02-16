@@ -27,12 +27,16 @@
                 <th>Room Number</th>
                 <th>Clean</th>
                 <th>Vacant</th>
+                <th></th>
+                <th></th>
             </thead>
             {{#each results}}
               <tr>
                 <td>{{room_id}}</td>
                 <td>{{is_clean}}</td>
                 <td>{{is_occupied}}</td>
+                <td><form action="/edit" method="post"><input type="submit" value="Edit" onclick="editRow({{this.id}})"></form></td>
+				<td><input type="submit" value="Delete" onclick="deleteRow({{this.id}})"></td>
               </tr>
             {{/each}}
       </div>
