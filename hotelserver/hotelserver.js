@@ -105,7 +105,8 @@ app.get('/create-customer-account',function(req,res,next){
 app.post('/create-customer-account', function(req, res, next){
   var context = {};
   var params  = req.body;
-    mysql.pool.query('INSERT INTO Customers SET ?', params, function(err, results, fields){
+  console.log("req.body: " + req.body.email_address);
+    mysql.pool.query('INSERT INTO Customers (first_name, last_name, email_address, age) VALUES ("'+params.first_name+'", "'+params.last_name+'", "'+params.email_address+'", "'+params.age+'")', params, function(err, results, fields){
       mysql.pool.query('SELECT * FROM `Customers`', function(err, rows, fields){
         context.results = rows;
         res.render('create-customer-account',context);
@@ -116,7 +117,7 @@ app.post('/create-customer-account', function(req, res, next){
 
 app.get('/search-customer',function(req,res,next){
   var context = {};
-  mysql.pool.query('SELECT first_name, last_name, email_address, age FROM `customers`', function(err, rows, fields){
+  mysql.pool.query('SELECT first_name, last_name, email_address, age FROM `Customers`', function(err, rows, fields){
     context.results = rows;
     res.render('search-customer',context);
   });
@@ -133,7 +134,8 @@ app.get('/create-booking',function(req,res,next){
 app.post('/create-booking', function(req, res, next){
   var context = {};
   var params  = req.body;
-    mysql.pool.query('INSERT INTO Bookings SET ?', params, function(err, results, fields){
+  console.log("req.body: " + req.body.booking_date);
+    mysql.pool.query('INSERT INTO Bookings (booking_date) VALUES ("'+params.booking_date+'")', function(err, results, fields){
     mysql.pool.query('SELECT * FROM `Bookings`', function(err, rows, fields){
       context.results = rows;
 	    res.render('create-booking',context);
