@@ -26,7 +26,7 @@ CREATE TABLE `Customers` (
   `email_address` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
-  `age` INT(11) NOT NULL,
+  `age` int(11) NOT NULL,
   PRIMARY KEY (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS `Bookings`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Bookings` (
   `booking_id` int(11) AUTO_INCREMENT NOT NULL,
-  `cid` int NOT NULL DEFAULT '0',
+  `cid` int(11) NOT NULL DEFAULT '0',
   `booking_date` date NOT NULL,
   PRIMARY KEY (`booking_id`),
   CONSTRAINT FOREIGN KEY (`cid`) REFERENCES Customers(`customer_id`)
@@ -58,9 +58,9 @@ CREATE TABLE `Bookings` (
 
 LOCK TABLES `Bookings` WRITE;
 /*!40000 ALTER TABLE `Bookings` DISABLE KEYS */;
-INSERT INTO `Bookings` (`booking_date`) VALUES ('1920-09-08'),
-                                               ('2020-02-20'),
-                                               ('2002-04-20');
+INSERT INTO `Bookings` (`cid`, `booking_date`) VALUES (1, '1920-09-08'),
+                                                      (2, '2020-02-20'),
+                                                      (3, '2002-04-20');
 /*!40000 ALTER TABLE `Bookings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,7 +72,7 @@ DROP TABLE IF EXISTS `Rooms`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Rooms` (
   `room_id` int(11) AUTO_INCREMENT NOT NULL,
-  `room_price` int NOT NULL,
+  `room_price` int(11) NOT NULL,
   `is_clean` boolean NOT NULL,
   `is_occupied` boolean NOT NULL,
   PRIMARY KEY (`room_id`)
@@ -94,19 +94,19 @@ DROP TABLE IF EXISTS `Booking_Details`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Booking_Details` (
   `booking_details_id` int(11) AUTO_INCREMENT NOT NULL,
-  `bid` int NOT NULL DEFAULT '0',
-  `rid` int NOT NULL DEFAULT '0',
+  `cid` int(11),
+  `rid` int(11),
   `booking_price` int NOT NULL,
   PRIMARY KEY (`booking_details_id`),
-  CONSTRAINT FOREIGN KEY (`bid`) REFERENCES Bookings(`booking_id`),
-  CONSTRAINT FOREIGN KEY (`rid`) REFERENCES Rooms(`room_id`)
+  CONSTRAINT FOREIGN KEY (`cid`) REFERENCES Customers(`customer_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`rid`) REFERENCES Rooms(`room_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `Booking_Details` WRITE;
 /*!40000 ALTER TABLE `Booking_Details` DISABLE KEYS */;
-INSERT INTO `Booking_Details` (`booking_price`) VALUES (296),
-                                                       (497),
-                                                       (397);
+INSERT INTO `Booking_Details` (`cid`, `rid`, `booking_price`) VALUES (1, 1, 98),
+                                                                     (2, 1, 98),
+                                                                     (3, 2, 198);
 /*!40000 ALTER TABLE `Booking_Details` ENABLE KEYS */;
 UNLOCK TABLES;
 

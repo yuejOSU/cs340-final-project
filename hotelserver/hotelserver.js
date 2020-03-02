@@ -21,82 +21,12 @@ app.use(express.static(path.join(__dirname, '/public')));
 var x = 0;
 
 app.get('/',function(req,res,next){
-  // var context = {};
-
-  // var createTables = [
-  // "CREATE TABLE IF NOT EXISTS `customers`(" +
-  // "`customer_id` INT(11) PRIMARY KEY AUTO_INCREMENT," +
-  // "`first_name` VARCHAR(255) NOT NULL," +
-  // "`last_name` VARCHAR(255) NOT NULL," +
-  // "`email` VARCHAR(255) NOT NULL," +
-  // "`age` INT(11) NOT NULL);",
-
-  // "CREATE TABLE IF NOT EXISTS `bookings`(" +
-  // "`booking_id` INT(11) PRIMARY KEY AUTO_INCREMENT," +
-  // "`cid` INT(11)," +
-  // "`booking_date` date NOT NULL," +
-  // "FOREIGN KEY (cid) REFERENCES customers(customer_id));",
-
-  // "CREATE TABLE IF NOT EXISTS `rooms`(" +
-  // "`room_id` INT(11) AUTO_INCREMENT," +
-  // "`is_clean` boolean NOT NULL," +
-  // "`is_occupied` boolean NOT NULL," +
-  // "PRIMARY KEY (`room_id`));",
-
-  // "CREATE TABLE IF NOT EXISTS `booking_details`(" +
-  // "`booking_details_id` INT(11) PRIMARY KEY AUTO_INCREMENT," +
-  // "`bid` INT(11)," +
-  // "`rid` INT(11)," +
-  // "`booking_price` INT NOT NULL," +
-  // "FOREIGN KEY (bid) REFERENCES customers(customer_id)," +
-  // "FOREIGN KEY (rid) REFERENCES rooms(room_id));"
-  // ];
-
-  // var deleteTables = [
-  // "DROP TABLE IF EXISTS `customers`",
-  // "DROP TABLE IF EXISTS `bookings`",
-  // "DROP TABLE IF EXISTS `rooms`",
-  // "DROP TABLE IF EXISTS `booking_details`"
-  // ];
-
-  // var insert = [
-  // "INSERT INTO `customers` (`email`, `first_name`, `last_name`, `age`) VALUES (\"boobroos@gmail.com\", \"Bob\", \"Ross\", 27)",
-  // "INSERT INTO `bookings` (`booking_date`) VALUES (\'1920-09-20\')",
-  // "INSERT INTO `rooms` (`is_clean`, `is_occupied`) VALUES (false, true)",
-  // "INSERT INTO `booking_details` (`booking_price`) VALUES (1)"
-  // ];
-
-
-  // if(!x) {
-  //   for (i = 0; i < 4; i++) {
-  //   //  mysql.pool.query(deleteTables[i], function(err){
-  //   //    if(err){
-  //   //      next(err);
-  //   //      return;
-  //   //    }
-  //   //  });
-  //     mysql.pool.query(createTables[i], function(err){
-  //       if(err){
-  //         next(err);
-  //         return;
-  //       }
-  //     });
-  //     mysql.pool.query(insert[i], function(err){
-  //       if(err){
-  //         next(err);
-  //         return;
-  //       }
-  //     });
-  //   };
-  // }
-  // x = 1;
-
   res.render('home');
 });
 
 app.get('/create-customer-account',function(req,res,next){
   var context = {};
-  mysql.pool.query('SELECT * FROM `Customers`', function(err, rows, fields){
+  mysql.pool.query('SELECT Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM Customers', function(err, rows, fields){
     context.results = rows;
     res.render('create-customer-account',context);
   });
@@ -117,7 +47,7 @@ app.post('/create-customer-account', function(req, res, next){
 
 app.get('/search-customer',function(req,res,next){
   var context = {};
-  mysql.pool.query('SELECT first_name, last_name, email_address, age FROM `Customers`', function(err, rows, fields){
+  mysql.pool.query('SELECT Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM Customers', function(err, rows, fields){
     context.results = rows;
     res.render('search-customer',context);
   });
@@ -125,7 +55,7 @@ app.get('/search-customer',function(req,res,next){
 
 app.get('/create-booking',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM `Bookings`', function(err, rows, fields){
+    mysql.pool.query('SELECT Bookings.booking_id, CONCAT_WS(\' \', Customers.first_name, Customers.last_name) AS whole_name, Customers.email_address, Bookings.booking_date FROM Bookings LEFT JOIN Customers ON Customers.customer_id = Bookings.cid', function(err, rows, fields){
       context.results = rows;
 	  res.render('create-booking',context);
 	  });
@@ -136,7 +66,7 @@ app.post('/create-booking', function(req, res, next){
   var params  = req.body;
   console.log("req.body: " + req.body.booking_date);
     mysql.pool.query('INSERT INTO Bookings (booking_date) VALUES ("'+params.booking_date+'")', function(err, results, fields){
-    mysql.pool.query('SELECT * FROM `Bookings`', function(err, rows, fields){
+    mysql.pool.query('SELECT Bookings.booking_id, CONCAT_WS(\' \', Customers.first_name, Customers.last_name) AS whole_name, Customers.email_address, Bookings.booking_date FROM Bookings LEFT JOIN Customers ON Customers.customer_id = Bookings.cid', function(err, rows, fields){
       context.results = rows;
 	    res.render('create-booking',context);
 	  });
@@ -145,7 +75,7 @@ app.post('/create-booking', function(req, res, next){
 
 app.get('/search-booking-details',function(req,res,next){
   var context = {};
-  mysql.pool.query('SELECT * FROM `Booking_Details`', function(err, rows, fields){
+  mysql.pool.query('SELECT Booking_Details.booking_details_id, Booking_Details.booking_price, CONCAT_WS(\' \', Customers.first_name, Customers.last_name) AS whole_name, Rooms.room_id FROM Booking_Details LEFT JOIN Customers ON Customers.customer_id = Booking_Details.cid LEFT JOIN Rooms ON Rooms.room_id = Booking_Details.rid GROUP BY whole_name', function(err, rows, fields){
     context.results = rows;
     res.render('search-booking-details',context);
   });

@@ -15,22 +15,28 @@
     <div>
         <table>
           <thead>
+            <tr>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
               <th>Age</th>
               <th></th>
               <th></th>
-          </thead>
-          {{#each results}}
-            <tr>
-              <td>{{first_name}}</td>
-              <td>{{last_name}}</td>
-              <td>{{email_address}}</td>
-              <td>{{age}}</td>
-              <td><form action="/edit" method="post"><input type="submit" value="Edit" onclick="editRow({{this.id}})"></form></td>
-				      <td><input type="submit" value="Delete" onclick="deleteRow({{this.id}})"></td>
             </tr>
-          {{/each}}
+          </thead>
+          <tbody>
+            {{#if results}}
+              {{#each results}}
+                <tr>
+                  <td>{{this.first_name}}</td>
+                  <td>{{this.last_name}}</td>
+                  <td>{{this.email_address}}</td>
+                  <td>{{this.age}}</td>
+                  <td><form action="/edit" method="post"><input type="submit" value="Edit" onclick="editRow({{this.id}})"></form></td>
+                  <td><input type="submit" value="Delete" onclick="deleteRow({{this.id}})"></td>
+                </tr>
+              {{/each}}
+            {{/if}}
+          </tbody>
         </table>
       </div>
