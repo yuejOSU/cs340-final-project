@@ -124,3 +124,7 @@ body {
 .show {
   display: block;
 }
+
+filterContainer {
+  float: left;
+}
