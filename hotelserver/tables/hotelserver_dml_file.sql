@@ -7,7 +7,8 @@ LEFT JOIN Customers ON Customers.customer_id = Bookings.cid;
 
 -- get all booking_detail information and populate it in the booking_detail table
 SELECT Booking_Details.booking_details_id, Booking_Details.booking_price, CONCAT_WS(' ', Customers.first_name, Customers.last_name) AS whole_name, Rooms.room_id FROM Booking_Details
-LEFT JOIN Customers ON Customers.customer_id = Booking_Details.cid
+LEFT JOIN Bookings ON Bookings.booking_id = Booking_Details.bid
+LEFT JOIN Customers ON Customers.customer_id = Bookings.cid
 LEFT JOIN Rooms ON Rooms.room_id = Booking_Details.rid
 GROUP BY whole_name;
 

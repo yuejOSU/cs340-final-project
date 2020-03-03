@@ -94,17 +94,17 @@ DROP TABLE IF EXISTS `Booking_Details`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Booking_Details` (
   `booking_details_id` int(11) AUTO_INCREMENT NOT NULL,
-  `cid` int(11),
+  `bid` int(11),
   `rid` int(11),
   `booking_price` int NOT NULL,
   PRIMARY KEY (`booking_details_id`),
-  CONSTRAINT FOREIGN KEY (`cid`) REFERENCES Customers(`customer_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`bid`) REFERENCES Bookings(`bid`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (`rid`) REFERENCES Rooms(`room_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `Booking_Details` WRITE;
 /*!40000 ALTER TABLE `Booking_Details` DISABLE KEYS */;
-INSERT INTO `Booking_Details` (`cid`, `rid`, `booking_price`) VALUES (1, 1, 98),
+INSERT INTO `Booking_Details` (`bid`, `rid`, `booking_price`) VALUES (1, 1, 98),
                                                                      (2, 1, 98),
                                                                      (3, 2, 198);
 /*!40000 ALTER TABLE `Booking_Details` ENABLE KEYS */;
