@@ -14,6 +14,13 @@ GROUP BY whole_name;
 -- get all room information and populate it in the rooms table
 SELECT Rooms.room_id, Rooms.room_price, Rooms.is_clean, Rooms.is_occupied FROM Rooms;
 
+-- get booking details for a searched customer (using the search bar)
+SELECT Booking_Details.booking_details_id, Booking_Details.booking_price, CONCAT_WS(' ', Customers.first_name, Customers.last_name) AS whole_name, Rooms.room_id FROM Booking_Details
+JOIN Customers ON Customers.customer_id = Booking_Details.cid
+JOIN Rooms ON Rooms.room_id = Booking_Details.rid
+WHERE Customers.first_name = :fnameInput AND Customers.last_name = :lnameInput;
+
+
 -- adds a new customer
 INSERT INTO Customers (first_name, last_name, email_address, age) VALUES (:fnameInput, :lnameInput, :emailInput, :ageInput);
 
