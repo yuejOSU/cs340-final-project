@@ -10,6 +10,25 @@
       <input type="submit" value="Search">
     </div>
     <div>
+    <div class="filterContainer">
+      <form action="/search-booking-details" method="get">
+          <div class="form-group">
+            <label>Filter By Name</label>
+            <input name="searchFirstName" type="text" required="required" placeholder="First Name">
+            <input name="searchLastName" type="text" required="required" placeholder="Last Name">
+          </div>
+          <input type="submit" name="filterByName" value="Filter" class="btn btn-primary" />
+      </form>
+
+      <form action="/search-booking-details" method="get">
+        <div class="form-group">
+          <label>Filter By Price</label>
+          <input name="searchMinPrice" type="number" required="required" placeholder="Min Price">
+          <input name="searchMaxPrice" type="number" required="required" placeholder="Max Price">
+        </div>
+        <input type="submit" name="filterByPrice" value="Filter" class="btn btn-primary" />
+      </form>
+    </div>
       <table>
         <tr>
           <thead>
@@ -17,8 +36,8 @@
               <th>Booking Price</th>
               <th>Customer Name</th>
               <th>Room ID</th>
-              <th></th>
-              <th></th>
+              <th>Edit</th>
+              <th>Delete</th>
           </thead>
         </tr>
         <tbody>
