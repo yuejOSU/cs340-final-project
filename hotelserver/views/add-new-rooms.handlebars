@@ -1,42 +1,61 @@
 <body style="background-color:#FFFAED; text-align:center">
   <h1>Add New Rooms</h1>
-    <div class="create-container">
-        <form>
-            <div>
-                <div class="inputs">
 
-                    <div class="field">
-                        <label>Cleaned</label>
-                        <input name="is_clean" type="text" placeholder="TRUE or FALSE">
-                    </div>
-
-                    <div class="field">
-                        <label>Occupied</label>
-                        <input name="is_occupied" type="text" required="required" placeholder="TRUE or FALSE"
-                    </div>
-
-                </div>
-
-                <input type="submit" value="Add">
-            </div>
-        </form>
-    </div>
-    <div>
-        <table>
-            <thead>
-                <th>Room Number</th>
-                <th>Clean</th>
-                <th>Vacant</th>
-                <th></th>
-                <th></th>
-            </thead>
-            {{#each results}}
-              <tr>
-                <td>{{room_id}}</td>
-                <td>{{is_clean}}</td>
-                <td>{{is_occupied}}</td>
-                <td><form action="/edit" method="post"><input type="submit" value="Edit" onclick="editRow({{this.id}})"></form></td>
-				<td><input type="submit" value="Delete" onclick="deleteRow({{this.id}})"></td>
-              </tr>
-            {{/each}}
+  <div class="create-container">
+    <form action="/add_new_rooms" method="POST">
+      <div>
+        <div class="inputs">
+          <div class="field">
+            <label>Room price</label>
+            <input name="room_price" type="number" required="required" placeholder="How much per night?">
+          </div>
+          <div class="field">
+              <label>Cleaned</label>
+              <select name="is_clean">
+                <option value="true">Cleaned</option>
+                <option value="false">Not Cleaned</option>
+              </select>
+          </div>
+          <div class="field">
+              <label>Occupied</label>
+              <select name="is_occupied">
+                <option value="true">Occupied</option>
+                <option value="false" selected>Vacant</option>
+              </select>
+          </div>
+        </div>
+        <input type="submit" name="addRoom" value="Add">
       </div>
+    </form>
+  </div>
+  <div>
+    <table>
+        <thead>
+          <th>Room Number</th>
+          <th>Room Price</th>
+          <th>Clean</th>
+          <th>Occupied</th>
+          <th></th>
+          <th></th>
+        </thead>
+        {{#each results}}
+          <tr>
+            <td>{{room_id}}</td>
+            <td>{{room_price}}</td>
+            {{#if is_clean}}
+                <td>true</td>
+            {{else}}
+                <td>false</td>
+            {{/if}}
+            {{#if is_occupied}}
+                <td>true</td>
+            {{else}}
+                <td>false</td>
+            {{/if}}
+            <td><form action="/edit" method="post"><input type="submit" value="Edit" onclick="editRow({{this.id}})"></form></td>
+            <td><input type="submit" value="Delete" onclick="deleteRow({{this.id}})"></td>
+          </tr>
+        {{/each}}
+    </table>
+  </div>
+</body>

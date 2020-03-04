@@ -100,10 +100,37 @@ app.get('/search-booking-details',function(req,res,next){
 
 app.get('/add-new-rooms',function(req,res,next){
   var context = {};
-    mysql.pool.query('SELECT * FROM `Rooms`', function(err, rows, fields){
+    mysql.pool.query('SELECT Rooms.room_id, Rooms.room_price, Rooms.is_clean, Rooms.is_occupied FROM Rooms', function(err, rows, fields){
       context.results = rows;
-	  res.render('add-new-rooms',context);
+	    res.render('add-new-rooms',context);
 	  });
+});
+
+app.post('/add-new-rooms', function(req, res, next){
+  var context = {};
+  console.log("I'm posting...");
+  console.log(req.body);
+  var params = req.body;
+  
+  if (params.is_clean === "true") {
+    params.is_clean = true;
+  } else {
+    params.is_clean = false;
+  }
+
+  if (params.is_occupied === "true") {
+    params.is_occupied = true;
+  } else {
+    params.is_occupied = false;
+  }
+
+  mysql.pool.query('INSERT INTO Rooms (room_price, is_clean, is_occupied) VALUES ("'+params.room_price+'", "'+params.is_clean+'", "'+params.is_occupied+'")', params, function(err, results, fields){
+    mysql.pool.query('SELECT Rooms.room_id, Rooms.room_price, Rooms.is_clean, Rooms.is_occupied FROM Rooms', function(err, rows, fields){
+      context.results = rows;
+      console.log(context.result);
+      res.render('add-new-rooms',context);
+    });
+  });
 });
 
 app.use(function(req,res){
