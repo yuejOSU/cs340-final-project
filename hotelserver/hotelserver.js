@@ -24,7 +24,7 @@ app.get('/',function(req,res,next){
 
 app.get('/create-customer-account',function(req,res,next){
   var context = {};
-  mysql.pool.query('SELECT Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM Customers', function(err, rows, fields){
+  mysql.pool.query('SELECT Customers.customer_id, Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM Customers', function(err, rows, fields){
     context.results = rows;
     res.render('create-customer-account',context);
   });
@@ -34,11 +34,24 @@ app.post('/create-customer-account', function(req, res, next){
   var context = {};
   var params  = req.body;
     mysql.pool.query('INSERT INTO Customers (first_name, last_name, email_address, age) VALUES ("'+params.first_name+'", "'+params.last_name+'", "'+params.email_address+'", "'+params.age+'")', params, function(err, results, fields){
-      mysql.pool.query('SELECT * FROM `Customers`', function(err, rows, fields){
+      mysql.pool.query('SELECT Customers.customer_id, Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM `Customers`', function(err, rows, fields){
         context.results = rows;
         res.render('create-customer-account',context);
       });
-  });
+    });
+});
+
+//https://www.js-tutorials.com/nodejs-tutorial/node-js-rest-api-add-edit-delete-record-mysql-using-express/
+app.delete('/create-customer-account', function(req, res, next){
+   console.log("req.body: " + req.body);
+   mysql.pool.query('DELETE FROM Customers WHERE customer_id=?', [req.body.customer_id], function (error, results, fields) {
+	  if (error) throw error;
+	  res.end('Record has been deleted!');
+    mysql.pool.query('SELECT Customers.customer_id, Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM `Customers`', function(err, rows, fields){
+      context.results = rows;
+      res.render('create-customer-account',context);
+    });
+	});
 });
 
 app.get('/create-booking',function(req,res,next){
