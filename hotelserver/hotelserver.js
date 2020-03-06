@@ -133,6 +133,29 @@ app.post('/add-new-rooms', function(req, res, next){
   });
 });
 
+// GET request to delete row from table
+app.get('/delete', function(req,res,next) {
+  var context = {};
+
+  var params = req.query;
+
+  switch (params.table) {
+    case 'Customers':
+      params.table_id_clause = 'customer_id';
+      break;
+  }
+
+  mysql.pool.query('SELECT * FROM ' + params.table + ' WHERE ' + params.table_id_clause + '=' + params.id, function(err, result) {
+    if(err) {
+      next(err);
+      return;
+    }
+    mysql.pool.query('DELETE FROM ' + params.table + ' WHERE ' + params.table_id_clause + '=' + params.id, function(err, result) {
+      res.send(req.query);
+    });
+  });
+});
+
 app.use(function(req,res){
   res.status(404);
   res.render('404');
