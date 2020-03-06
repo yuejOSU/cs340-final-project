@@ -25,10 +25,9 @@
       <table>
         <tr>
           <thead>
-              <th>Booking ID</th>
               <th>Booking Details ID</th>
-              <th>Customer Name</th>
               <th>Room ID</th>
+              <th>Customer Name</th>
               <th>Booking Price</th>
               <th>Edit</th>
               <th>Delete</th>
@@ -38,11 +37,10 @@
           {{#if results}}
             {{#each results}}
               <tr>
-                <td>{{this.booking_id}}</td>
-                <td>{{this.booking_details_id}}</td>
+                <td>#{{this.booking_details_id}}</td>
+                <td>#{{this.room_id}}</td>
                 <td>{{this.whole_name}}</td>
-                <td>{{this.room_id}}</td>
-                <td>{{this.booking_price}}</td>
+                <td>${{this.booking_price}}</td>
                 <td><form action="/edit" method="post"><input type="submit" value="Edit" onclick="editRow({{this.id}})"></form></td>
                 <td><input type="submit" value="Delete" onclick="deleteRow({{this.id}})"></td>
               </tr>
