@@ -53,7 +53,7 @@ CREATE TABLE `Bookings` (
   `cid` int(11) NOT NULL DEFAULT '0',
   `booking_date` date NOT NULL,
   PRIMARY KEY (`booking_id`),
-  CONSTRAINT FOREIGN KEY (`cid`) REFERENCES Customers(`customer_id`)
+  CONSTRAINT FOREIGN KEY (`cid`) REFERENCES Customers(`customer_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `Bookings` WRITE;
