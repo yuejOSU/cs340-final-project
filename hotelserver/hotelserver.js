@@ -85,7 +85,7 @@ app.get('/search-booking-details',function(req,res,next){
      });
    }
    else if(req.query.filterByPrice) {
-     mysql.pool.query('SELECT Booking_Details.booking_details_id, Booking_Details.booking_price, CONCAT_WS(\' \', Customers.first_name, Customers.last_name) AS whole_name, Rooms.room_id FROM Booking_Details LEFT JOIN Bookings ON Bookings.booking_id = Booking_Details.bid LEFT JOIN Customers ON Customers.customer_id = Bookings.cid LEFT JOIN Rooms ON Rooms.room_id = Booking_Details.rid WHERE Booking_Details.booking_price >= "'+params.searchMinPrice+'" AND Booking_Details.booking_price <= "'+params.searchMaxPrice+'" GROUP BY whole_name', function(err, rows, fields){
+     mysql.pool.query('SELECT Booking_Details.booking_details_id, Booking_Details.booking_price, CONCAT_WS(\' \', Customers.first_name, Customers.last_name) AS whole_name, Rooms.room_id FROM Booking_Details LEFT JOIN Bookings ON Bookings.booking_id = Booking_Details.bid LEFT JOIN Customers ON Customers.customer_id = Bookings.cid LEFT JOIN Rooms ON Rooms.room_id = Booking_Details.rid WHERE whole_name != NULL AND Booking_Details.booking_price >= "'+params.searchMinPrice+'" AND Booking_Details.booking_price <= "'+params.searchMaxPrice+'" GROUP BY whole_name', function(err, rows, fields){
        context.results = rows;
        res.render('search-booking-details',context);
      });
