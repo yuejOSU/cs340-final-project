@@ -50,14 +50,14 @@
               <td>{{this.room_id}}</td>
               <td>{{this.room_price}}</td>
               {{#if this.is_clean}}
-                  <td>true</td>
+                  <td>Yes</td>
               {{else}}
-                  <td>false</td>
+                  <td>No</td>
               {{/if}}
               {{#if this.is_occupied}}
-                  <td>true</td>
+                  <td>Yes</td>
               {{else}}
-                  <td>false</td>
+                  <td>No</td>
               {{/if}}
               <td><input type="submit" value="Delete" onclick="deleteRow('Rooms', {{this.room_id}})"></td>
             </tr>
