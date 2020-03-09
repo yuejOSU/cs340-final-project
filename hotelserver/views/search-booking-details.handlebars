@@ -26,9 +26,11 @@
         <tr>
           <thead>
               <th>Booking Details ID</th>
+              <th>Booking Date</th>
               <th>Customer Name</th>
               <th>Room ID</th>
               <th>Booking Price</th>
+              <th>Has Multiple Bookings</th>
           </thead>
         </tr>
         <tbody>
@@ -36,9 +38,15 @@
             {{#each results}}
               <tr>
                 <td>#{{this.booking_details_id}}</td>
+                <td>{{this.booking_date}}</td>
                 <td>{{this.whole_name}}</td>
                 <td>#{{this.room_id}}</td>
                 <td>${{this.booking_price}}</td>
+                {{#if this.multipleBookings}}
+                  <td>Yes</td>
+                {{else}}
+                  <td>No</td>
+                {{/if}}
               </tr>
             {{/each}}
           {{/if}}

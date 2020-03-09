@@ -47,14 +47,14 @@
         {{#if results}}
           {{#each results}}
             <tr id={{this.room_id}}>
-              <td>{{room_id}}</td>
-              <td>{{room_price}}</td>
-              {{#if is_clean}}
+              <td>{{this.room_id}}</td>
+              <td>{{this.room_price}}</td>
+              {{#if this.is_clean}}
                   <td>true</td>
               {{else}}
                   <td>false</td>
               {{/if}}
-              {{#if is_occupied}}
+              {{#if this.is_occupied}}
                   <td>true</td>
               {{else}}
                   <td>false</td>
