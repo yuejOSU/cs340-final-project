@@ -4,10 +4,15 @@
 
 <form action="/edit-customer-account" method="POST">
     <div class="inputs">
-      <div class="customer_id">
         <label>Select Customer</label>
-        <input name="customer_id" type="text" required="required" placeholder="ID">
-      </div>
+        <select name="customer_id" id="customer_id">
+          <option selected value="base">Please Select</option>
+          {{#if results}}
+            {{#each results}}
+          <option> {{this.customer_id}}</option>
+            {{/each}}
+          {{/if}}
+        </select>
       <div class="first_name">
         <label>First name</label>
         <input name="first_name" type="text" required="required" placeholder="First Name">
