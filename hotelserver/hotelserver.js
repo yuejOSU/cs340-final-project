@@ -43,7 +43,7 @@ app.post('/create-customer-account', function(req, res, next){
 
 app.get('/edit-customer-account',function(req,res,next){
   var context = {};
-  mysql.pool.query('SELECT Customers.customer_id, Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM Customers', function(err, rows, fields){
+  mysql.pool.query('SELECT Customers.customer_id, CONCAT_WS(\' \', Customers.first_name, Customers.last_name) AS whole_name, Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM Customers', function(err, rows, fields){
     context.results = rows;
     res.render('edit-customer-account',context);
   });
