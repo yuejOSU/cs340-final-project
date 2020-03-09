@@ -1,5 +1,3 @@
-// document.addEventListener('DOMContentLoaded', getButton);
-
 // DELETING ROW FUNCTION
 function deleteRow(tableName, idString) {
 

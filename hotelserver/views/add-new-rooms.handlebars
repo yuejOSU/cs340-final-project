@@ -1,3 +1,7 @@
+<head>
+  <script src="client-side.js"></script>
+</head>
+
 <body style="background-color:#FFFAED; text-align:center">
   <h1>Add New Rooms</h1>
 
@@ -30,32 +34,36 @@
   </div>
   <div>
     <table>
+      <tr>
         <thead>
           <th>Room Number</th>
           <th>Room Price</th>
           <th>Clean</th>
           <th>Occupied</th>
-          <th></th>
-          <th></th>
+          <th>Delete</th>
         </thead>
-        {{#each results}}
-          <tr>
-            <td>{{room_id}}</td>
-            <td>{{room_price}}</td>
-            {{#if is_clean}}
-                <td>true</td>
-            {{else}}
-                <td>false</td>
-            {{/if}}
-            {{#if is_occupied}}
-                <td>true</td>
-            {{else}}
-                <td>false</td>
-            {{/if}}
-            <td><form action="/edit" method="post"><input type="submit" value="Edit" onclick="editRow({{this.id}})"></form></td>
-            <td><input type="submit" value="Delete" onclick="deleteRow({{this.id}})"></td>
-          </tr>
-        {{/each}}
+      </tr>
+      <tbody id="tableBody">
+        {{#if results}}
+          {{#each results}}
+            <tr id={{this.room_id}}>
+              <td>{{room_id}}</td>
+              <td>{{room_price}}</td>
+              {{#if is_clean}}
+                  <td>true</td>
+              {{else}}
+                  <td>false</td>
+              {{/if}}
+              {{#if is_occupied}}
+                  <td>true</td>
+              {{else}}
+                  <td>false</td>
+              {{/if}}
+              <td><input type="submit" value="Delete" onclick="deleteRow('Rooms', {{this.room_id}})"></td>
+            </tr>
+          {{/each}}
+        {{/if}}
+      </tbody>
     </table>
   </div>
 </body>

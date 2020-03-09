@@ -4,12 +4,23 @@
     <form action="/create-booking" method="post">
       <div>
         <div class="inputs">
-          <div class="booking_date">
+          <div class="field">
+            <label>Customer</label>
+            <select name="customer_id" id="customer_id" required>
+              <option selected value="base">Please Select</option>
+              {{#if results}}
+                {{#each results}}
+                  <option value={{this.customer_id}}>{{this.whole_name}}</option>
+                {{/each}}
+              {{/if}}
+            </select>
+          </div>
+          <div class="field">
             <label>Booking Date</label>
-            <input name="booking_date" type="text" required="required" placeholder="Booking Date">
+            <input name="booking_date" type="text" required="required" placeholder="YYYY-MM-DD">
           </div>
         </div>
-        <input type="submit" value="Add">
+        <input type="submit" name="addBooking" value="Add">
       </div>
     </form>
   </div>
@@ -22,8 +33,6 @@
               <th>Customer Name</th>
               <th>Email Address</th>
               <th>Booking Date</th>
-              <th></th>
-              <th></th>
           </thead>
         </tr>
         <tbody>
@@ -34,8 +43,6 @@
                 <td>{{this.whole_name}}</td>
                 <td>{{this.email_address}}</td>
                 <td>{{this.booking_date}}</td>
-                <td><form action="/edit" method="post"><input type="submit" value="Edit" onclick="editRow({{this.id}})"></form></td>
-                <td><input type="submit" value="Delete" onclick="deleteRow({{this.id}})"></td>
               </tr>
             {{/each}}
           {{/if}}

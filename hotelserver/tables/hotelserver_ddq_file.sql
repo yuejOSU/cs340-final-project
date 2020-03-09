@@ -53,7 +53,7 @@ CREATE TABLE `Bookings` (
   `cid` int(11) NOT NULL DEFAULT '0',
   `booking_date` date NOT NULL,
   PRIMARY KEY (`booking_id`),
-  CONSTRAINT FOREIGN KEY (`cid`) REFERENCES Customers(`customer_id`) ON DELETE CASCADE
+  CONSTRAINT FOREIGN KEY (`cid`) REFERENCES Customers(`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `Bookings` WRITE;
@@ -106,7 +106,8 @@ LOCK TABLES `Booking_Details` WRITE;
 /*!40000 ALTER TABLE `Booking_Details` DISABLE KEYS */;
 INSERT INTO `Booking_Details` (`bid`, `rid`, `booking_price`) VALUES (1, 1, 98),
                                                                      (2, 1, 98),
-                                                                     (3, 2, 198);
+                                                                     (3, 2, 198),
+                                                                     (1, 3, 299);
 /*!40000 ALTER TABLE `Booking_Details` ENABLE KEYS */;
 UNLOCK TABLES;
 
