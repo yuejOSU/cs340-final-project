@@ -1,0 +1,58 @@
+
+<h1> Edit a Customer Account </h1>
+
+
+<form action="/edit-customer-account" method="POST">
+    <div class="inputs">
+      <div class="customer_id">
+        <label>Select Customer</label>
+        <input name="customer_id" type="text" required="required" placeholder="ID">
+      </div>
+      <div class="first_name">
+        <label>First name</label>
+        <input name="first_name" type="text" required="required" placeholder="First Name">
+      </div>
+      <div class="last_name">
+        <label>Last name</label>
+        <input name="last_name" type="text" required="required" placeholder="Last Name">
+      </div>
+      <div class="email_address">
+        <label>E-mail</label>
+        <input name="email_address" type="text" required="required" placeholder="E-mail">
+      </div>
+      <div class="age">
+        <label>Age</label>
+        <input name="age" type="number" required="required" placeholder="Age">
+      </div>
+    </div>
+    <input type="submit" name="editCustomer" value="Update">
+</form>
+
+<div>
+    <table>
+      <thead>
+        <tr>
+          <th>Customer ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        {{#if results}}
+          {{#each results}}
+            <tr id={{this.customer_id}}>
+              <td>{{this.customer_id}}</td>
+              <td>{{this.first_name}}</td>
+              <td>{{this.last_name}}</td>
+              <td>{{this.email_address}}</td>
+              <td>{{this.age}}</td>
+              <td><input name="delete" type="submit" value="Delete" onclick="deleteRow('Customers', {{this.customer_id}})"></td>
+            </tr>
+          {{/each}}
+        {{/if}}
+      </tbody>
+    </table>
+  </div>

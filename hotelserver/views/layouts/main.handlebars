@@ -6,7 +6,7 @@
         <script src="jquery-3.4.0.min.js"></script>
     </head>
     <body style="background-color:#FFFAED; text-align:center">
-        <body>      
+        <body>
             <div class="navbar">
                 <a href="/">Home</a>
                 <div class="dropdown">
@@ -15,6 +15,7 @@
                     </button>
                     <div class="dropdown-content" id="customerDropdown">
                         <a href="/create-customer-account">Create A Customer Account</a>
+                        <a href="/edit-customer-account">Edit an Existing Customer Account</a>
                     </div>
                 </div>
                 <div class="dropdown">
@@ -37,7 +38,7 @@
             </div>
 
             <script>
-                /* When the user clicks on the button, 
+                /* When the user clicks on the button,
                 toggle between hiding and showing the dropdown content */
                 function myFunction1() {
                     document.getElementById("customerDropdown").classList.toggle("show");
@@ -82,7 +83,7 @@
                         var customerDropdown = document.getElementById("customerDropdown");
                         var bookingDropdown = document.getElementById("bookingDropdown");
                         var roomDropdown = document.getElementById("roomDropdown");
-                        
+
                         if (customerDropdown.classList.contains('show')) {
                             customerDropdown.classList.remove('show');
                         }

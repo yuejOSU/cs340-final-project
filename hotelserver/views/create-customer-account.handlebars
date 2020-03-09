@@ -38,8 +38,7 @@
             <th>Last Name</th>
             <th>Email</th>
             <th>Age</th>
-            <th></th>
-            <th></th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody id="tableBody">
@@ -51,7 +50,6 @@
                 <td>{{this.last_name}}</td>
                 <td>{{this.email_address}}</td>
                 <td>{{this.age}}</td>
-                <td><form action="/create-customer-account" method="put"><input name="edit" type="submit" value="Edit"></form></td>
                 <td><input name="delete" type="submit" value="Delete" onclick="deleteRow('Customers', {{this.customer_id}})"></td>
               </tr>
             {{/each}}

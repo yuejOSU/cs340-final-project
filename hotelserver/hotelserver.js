@@ -41,18 +41,27 @@ app.post('/create-customer-account', function(req, res, next){
     });
 });
 
-//https://www.js-tutorials.com/nodejs-tutorial/node-js-rest-api-add-edit-delete-record-mysql-using-express/
-app.delete('/create-customer-account', function(req, res, next){
-   console.log("req.body: " + req.body);
-   mysql.pool.query('DELETE FROM Customers WHERE customer_id=?', [req.body.customer_id], function (error, results, fields) {
-	  if (error) throw error;
-	  res.end('Record has been deleted!');
+app.get('/edit-customer-account',function(req,res,next){
+  var context = {};
+  mysql.pool.query('SELECT Customers.customer_id, Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM Customers', function(err, rows, fields){
+    context.results = rows;
+    res.render('edit-customer-account',context);
+  });
+});
+
+app.post('/edit-customer-account',function(req,res,next){
+  var context = {};
+  var params  = req.body;
+  console.log("Params: " + JSON.stringify(params));
+  mysql.pool.query('UPDATE Customers SET Customers.first_name = "'+params.first_name+'", Customers.last_name = "'+params.last_name+'", Customers.email_address = "'+params.email_address+'", Customers.age = "'+params.age+'" WHERE Customers.customer_id = "'+params.customer_id+'"', function(err, results, fields){
     mysql.pool.query('SELECT Customers.customer_id, Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM `Customers`', function(err, rows, fields){
       context.results = rows;
-      res.render('create-customer-account',context);
+      res.render('edit-customer-account',context);
     });
-	});
+  });
 });
+
+
 
 app.get('/create-booking',function(req,res,next){
   var context = {};
@@ -138,7 +147,7 @@ app.get('/delete', function(req,res,next) {
   var context = {};
 
   var params = req.query;
-
+  console.log("Delete: " + JSON.stringify(params));
   switch (params.table) {
     case 'Customers':
       params.table_id_clause = 'customer_id';

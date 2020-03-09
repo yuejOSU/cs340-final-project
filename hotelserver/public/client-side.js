@@ -6,7 +6,7 @@ function deleteRow(tableName, idString) {
    console.log(tableName + " " + idString);
    var req = new XMLHttpRequest();
 
-   var urlQuery = '/delete?table=' + tableName + '&id=' + idString; 
+   var urlQuery = '/delete?table=' + tableName + '&id=' + idString;
 
    req.open('GET', urlQuery, true);
 
@@ -29,4 +29,3 @@ function deleteRow(tableName, idString) {
 
    req.send(null);
 }
- 
