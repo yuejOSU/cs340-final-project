@@ -33,6 +33,8 @@ app.get('/create-customer-account',function(req,res,next){
 app.post('/create-customer-account', function(req, res, next){
   var context = {};
   var params  = req.body;
+  console.log("req.body: " + JSON.stringify(params));
+  if(params.createCustomer) {
     mysql.pool.query('INSERT INTO Customers (first_name, last_name, email_address, age) VALUES ("'+params.first_name+'", "'+params.last_name+'", "'+params.email_address+'", "'+params.age+'")', params, function(err, results, fields){
       mysql.pool.query('INSERT INTO Bookings (cid, booking_date) VALUES ((SELECT AUTO_INCREMENT-1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = \'cs340_yuej\' AND TABLE_NAME = \'Customers\'), curdate())', function(err, results, fields){
         mysql.pool.query('SELECT Customers.customer_id, Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM `Customers`', function(err, rows, fields){
@@ -41,6 +43,7 @@ app.post('/create-customer-account', function(req, res, next){
         });
       });
     });
+  }
 });
 
 app.get('/edit-customer-account',function(req,res,next){
@@ -76,13 +79,15 @@ app.get('/create-booking',function(req,res,next){
 app.post('/create-booking', function(req, res, next){
   var context = {};
   var params  = req.body;
-  console.log("req.body: " + req.body.booking_date + ' ' + req.body.customer_id);
+  console.log("req.body: " + JSON.stringify(params));
+  if (params.addBooking == "Add") {
     mysql.pool.query('INSERT INTO Bookings (cid, booking_date) VALUES ("'+params.customer_id+'", "'+params.booking_date+'")', function(err, results, fields){
       mysql.pool.query('SELECT Bookings.booking_id, Customers.customer_id, CONCAT_WS(\' \', Customers.first_name, Customers.last_name) AS whole_name, Customers.email_address, Bookings.booking_date FROM Bookings LEFT JOIN Customers ON Customers.customer_id = Bookings.cid', function(err, rows, fields){
         context.results = rows;
         res.render('create-booking',context);
       });
-  });
+    });
+  }
 });
 
 app.get('/search-booking-details',function(req,res,next){
@@ -104,7 +109,7 @@ app.get('/search-booking-details',function(req,res,next){
    else {
       mysql.pool.query('SELECT Booking_Details.booking_details_id, Bookings.booking_date, Booking_Details.booking_price, CONCAT_WS(\' \', Customers.first_name, Customers.last_name) AS whole_name, Rooms.room_id FROM Booking_Details LEFT JOIN Bookings ON Bookings.booking_id = Booking_Details.bid LEFT JOIN Customers ON Customers.customer_id = Bookings.cid RIGHT JOIN Rooms ON Rooms.room_id = Booking_Details.rid WHERE Customers.first_name != \'\'', function(err, rows, fields){
         context.results = rows;
-        
+
         // self-executing function that will figure out if a customer has multiple bookings
         (function multipleBookings() {
           // loop through each result separately
@@ -119,12 +124,12 @@ app.get('/search-booking-details',function(req,res,next){
                 count++;
               }
             }
-            
+
             // if there are multiple bookings by one person, set new field 'multipleBookings' to true
             context.results[i].multipleBookings = (count > 1) ? true : false;
           }
         }) ()
-      
+
         res.render('search-booking-details',context);
      });
    }
