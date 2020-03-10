@@ -34,9 +34,11 @@ app.post('/create-customer-account', function(req, res, next){
   var context = {};
   var params  = req.body;
     mysql.pool.query('INSERT INTO Customers (first_name, last_name, email_address, age) VALUES ("'+params.first_name+'", "'+params.last_name+'", "'+params.email_address+'", "'+params.age+'")', params, function(err, results, fields){
-      mysql.pool.query('SELECT Customers.customer_id, Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM `Customers`', function(err, rows, fields){
-        context.results = rows;
-        res.render('create-customer-account',context);
+      mysql.pool.query('INSERT INTO Bookings (cid, booking_date) VALUES ((SELECT AUTO_INCREMENT-1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = \'cs340_yuej\' AND TABLE_NAME = \'Customers\'), curdate())', function(err, results, fields){
+        mysql.pool.query('SELECT Customers.customer_id, Customers.first_name, Customers.last_name, Customers.email_address, Customers.age FROM `Customers`', function(err, rows, fields){
+          context.results = rows;
+          res.render('create-customer-account',context);
+        });
       });
     });
 });
