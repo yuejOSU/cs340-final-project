@@ -183,6 +183,9 @@ app.get('/delete', function(req,res,next) {
     case 'Customers':
       params.table_id_clause = 'customer_id';
       break;
+    case 'Bookings':
+      params.table_id_clause = 'booking_id';
+      break;
     case 'Rooms':
       params.table_id_clause = 'room_id';
       break;

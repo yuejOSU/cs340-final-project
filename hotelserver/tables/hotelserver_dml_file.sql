@@ -43,7 +43,7 @@ INSERT INTO Bookings (cid, booking_date) VALUES ("'+params.customer_id+'", "'+pa
 INSERT INTO Rooms (room_price, is_clean, is_occupied) VALUES ("'+params.room_price+'", "'+params.is_clean+'", "'+params.is_occupied+'");
 
 -- associate a customer with a certificate (M-to-M relationship addition)
-INSERT INTO Booking_Details (bid, rid, booking_price) VALUES (:booking_id_to_associate, :room_id_to_associate, bookingPriceInput);
+INSERT INTO Booking_Details (bid, rid, booking_price) VALUES ((SELECT AUTO_INCREMENT-1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'cs340_yuej' AND TABLE_NAME = 'Bookings'), "'+params.room_id+'", (SELECT Rooms.room_price FROM Rooms WHERE Rooms.room_id="'+params.room_id+'"));
 
 -- update a customer's data based on submission of the Update customer form
 UPDATE Customers SET Customers.first_name = "'+params.first_name+'", Customers.last_name = "'+params.last_name+'", Customers.email_address = "'+params.email_address+'", Customers.age = "'+params.age+'" WHERE Customers.customer_id = "'+params.customer_id+'"
