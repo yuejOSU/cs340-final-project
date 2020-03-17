@@ -85,9 +85,11 @@ app.post('/create-booking', function(req, res, next){
   console.log("req.body: " + JSON.stringify(params));
   if (params.addBooking == "Add") {
     mysql.pool.query('INSERT INTO Bookings (cid, booking_date) VALUES ("'+params.customer_id+'", "'+params.booking_date+'")', function(err, results, fields){
-      mysql.pool.query('SELECT Bookings.booking_id, Customers.customer_id, CONCAT_WS(\' \', Customers.first_name, Customers.last_name) AS whole_name, Customers.email_address, Bookings.booking_date FROM Bookings LEFT JOIN Customers ON Customers.customer_id = Bookings.cid', function(err, rows, fields){
-        context.results = rows;
-        res.render('create-booking',context);
+      mysql.pool.query('INSERT INTO Booking_Details (bid, rid, booking_price) VALUES ((SELECT AUTO_INCREMENT-1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = \'cs340_yuej\' AND TABLE_NAME = \'Bookings\'), "'+params.room_id+'", (SELECT Rooms.room_price FROM Rooms WHERE Rooms.room_id="'+params.room_id+'"))' , function(err, rows, fields) {
+        mysql.pool.query('SELECT Bookings.booking_id, Customers.customer_id, CONCAT_WS(\' \', Customers.first_name, Customers.last_name) AS whole_name, Customers.email_address, Bookings.booking_date FROM Bookings LEFT JOIN Customers ON Customers.customer_id = Bookings.cid', function(err, rows, fields){
+          context.results = rows;
+          res.render('create-booking',context);
+        });
       });
     });
   }
