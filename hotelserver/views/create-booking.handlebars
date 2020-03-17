@@ -16,6 +16,17 @@
             </select>
           </div>
           <div class="field">
+            <label>Room</label>
+            <select name="room_id" id="room_id" required>
+              <option selected value="base">Please Select</option>
+              {{#if rooms}}
+                {{#each rooms}}
+                  <option value={{this.room_id}}>{{this.room_id}} - ${{this.room_price}}</option>
+                {{/each}}
+              {{/if}}
+            </select>
+          </div>
+          <div class="field">
             <label>Booking Date</label>
             <input name="booking_date" type="text" required="required" placeholder="YYYY-MM-DD">
           </div>

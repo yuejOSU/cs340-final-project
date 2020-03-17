@@ -72,7 +72,10 @@ app.get('/create-booking',function(req,res,next){
   var context = {};
     mysql.pool.query('SELECT Bookings.booking_id, Customers.customer_id, CONCAT_WS(\' \', Customers.first_name, Customers.last_name) AS whole_name, Customers.email_address, Bookings.booking_date FROM Bookings LEFT JOIN Customers ON Customers.customer_id = Bookings.cid', function(err, rows, fields){
       context.results = rows;
-      res.render('create-booking',context);
+      mysql.pool.query('SELECT Rooms.room_id, Rooms.room_price FROM Rooms', function(err, rows, fields) {
+        context.rooms = rows;
+        res.render('create-booking',context);
+      })
 	  });
 });
 
